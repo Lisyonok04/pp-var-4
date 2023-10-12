@@ -21,11 +21,11 @@ def download_images(query, folder, num_images):
 
     responseJson = response.json()
 
-#     for i, image_url in enumerate(response.json()["items"]):
-#         image_data = requests.get(image_url["preview"]).content
-#         file_name = str(i).zfill(4) + ".jpg"
-#         file_path = os.path.join(folder, file_name)
-#         with open(file_path, "wb") as file:
-#             file.write(image_data)
+    for i, image_url in enumerate(response.json()["items"]):
+         image_data = requests.get(image_url["preview"]).content
+         file_name = str(i).zfill(4) + ".jpg"
+         file_path = os.path.join(folder, file_name)
+         with open(file_path, "wb") as file:
+             file.write(image_data)
 download_images("rose", "dataset/rose", 1000)
 download_images("tulips", "dataset/tulips", 1000)
