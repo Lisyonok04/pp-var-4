@@ -14,8 +14,7 @@ def make_folder(name: str) -> None:
         os.mkdir(name)
 
 def pic_links(request: str) -> None:
-    driver = webdriver.Chrome(service = ChromeService(
-        ChromeDriverManager().install()))
+    driver = webdriver.Chrome(ChromeDriverManager().install())
     url = f"https://yandex.ru/images/search?text={request}"
     driver.get(url = url)
     driver.maximize_window()
@@ -24,12 +23,15 @@ def pic_links(request: str) -> None:
         By.CSS_SELECTOR, 'div.serp-item__preview a.serp-item__link').click()
     with open(f"{request}.txt", 'w') as file:
         for i in range(10):
-            time.sleep(0.5)
-            link = driver.find_element(
-                By.CSS_SELECTOR, "a.Button2_view_action").get_attribute("href")
-            file.write(link + '\n')
-            driver.find_element(
-                By.CSS_SELECTOR, "div.CircleButton:nth-child(4)").click()
+            try:
+                time.sleep(0.5)
+                link = driver.find_element(
+                    By.CSS_SELECTOR, "a.Button2_view_action").get_attribute("href")
+                file.write(link + '\n')
+                driver.find_element(
+                    By.CSS_SELECTOR, "div.CircleButton:nth-child(4)").click()
+            except:
+                continue
 
     driver.close()
     driver.quit()
