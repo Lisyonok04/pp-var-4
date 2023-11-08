@@ -17,8 +17,8 @@ def pic_links(request: str) -> None:
     driver = webdriver.Chrome(ChromeDriverManager().install())
     url = f"https://yandex.ru/images/search?text={request}"
     driver.get(url = url)
-    driver.maximize_window()
-    time.sleep(15)
+    #driver.maximize_window()
+    time.sleep(8)
     driver.find_element(
         By.CSS_SELECTOR, 'div.serp-item__preview a.serp-item__link').click()
     with open(f"{request}.txt", 'w') as file:
@@ -44,7 +44,7 @@ def download(request: str) -> None:
         for line in file:
             try:
                 url = line.strip()
-                time.sleep(4)
+                time.sleep(5)
                 response = requests.get(url, stream=True)
                 if response.status_code == 200:
                     count += 1
@@ -59,9 +59,9 @@ def main() -> None:
 
     if os.path.isdir("dataset"):
         shutil.rmtree("dataset")
-    request = "rose"
-    pic_links(request)
-    download(request)
+    #request = "rose"
+    #pic_links(request)
+    #download(request)
     request = "tulips"
     pic_links(request)
     download(request)
