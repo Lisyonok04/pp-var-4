@@ -22,5 +22,6 @@ def main() -> None:
     make_folder("dataset")
     request = "rose"
     make_folder(f"dataset/{request}")
-
-    
+    request = "tulips"
+    make_folder("dataset")
+    make_folder(f"dataset/{request}")
