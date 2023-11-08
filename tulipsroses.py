@@ -18,7 +18,7 @@ def pic_links(request: str) -> None:
     url = f"https://yandex.ru/images/search?text={request}"
     driver.get(url = url)
     driver.maximize_window()
-    time.sleep(10)
+    time.sleep(15)
     driver.find_element(
         By.CSS_SELECTOR, 'div.serp-item__preview a.serp-item__link').click()
     with open(f"{request}.txt", 'w') as file:
@@ -36,6 +36,24 @@ def pic_links(request: str) -> None:
     driver.close()
     driver.quit()
 
+def download(request: str) -> None:
+    make_folder("dataset")
+    make_folder(f"dataset/{request}")
+    count = 0
+    with open(f"{request}.txt", "r") as file:
+        for line in file:
+            try:
+                url = line.strip()
+                time.sleep(4)
+                response = requests.get(url, stream=True)
+                if response.status_code == 200:
+                    count += 1
+                    with open(f"dataset/{request}/{str(count).zfill(4)}.jpg", "wb") as image_file:
+                        shutil.copyfileobj(response.raw, image_file)
+                else:
+                    continue
+            except:
+                continue
 
 def main() -> None:
 
@@ -43,9 +61,7 @@ def main() -> None:
         shutil.rmtree("dataset")
     request = "rose"
     pic_links(request)
-    make_folder("dataset")
-    make_folder(f"dataset/{request}")
+    download(request)
     request = "tulips"
     pic_links(request)
-    make_folder("dataset")
-    make_folder(f"dataset/{request}")
+    download(request)
