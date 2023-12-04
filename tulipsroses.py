@@ -65,9 +65,9 @@ def main() -> None:
     if os.path.isdir("dataset"):
         shutil.rmtree("dataset")
     request = "tulip"
-    pic_links(request, 10)
+    pic_links(request, 1000)
     download(request)
 
     request = "rose"
-    pic_links(request, 10)
+    pic_links(request, 1000)
     download(request)
