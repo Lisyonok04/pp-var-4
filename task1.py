@@ -13,9 +13,9 @@ def relative_way(name: str, dir: str) -> List[str]:
     }
 
 def create_csv(namecsv: str) -> None:
-    {
-
-    }
+    with open(namecsv + ".csv", "w", newline="") as f:
+        filewriter = csv.writer(f, delimiter=",", lineterminator="\r")
+        filewriter.writerow(["Absolute path", "Relative path", "Class name"])
 
 def create_relative_way(name_class: str, number: int) -> str:
     return f"dataset/download_data/{name_class}/{str(number).zfill(4)}.jpg"
