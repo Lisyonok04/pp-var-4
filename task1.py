@@ -31,3 +31,6 @@ def create_csv(namecsv: str) -> None:
 
 def create_relative_way(name_class: str, number: int) -> str:
     return f"dataset/download_data/{name_class}/{str(number).zfill(4)}.jpg"
+
+if __name__ == "__main__":
+    create_csv("dataset/download_data")
