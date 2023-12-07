@@ -2,28 +2,32 @@ import csv
 import os
 from typing import List
 
-def absolute_way(name: str, dir: str) -> List[str]: 
-    {
+def write_in_file(name_class: str, number: int) -> None:
 
-    }
+    with open("dataset.csv", "a", newline='', encoding='utf8') as file:
+        printer = csv.writer(file, delimiter=";")
+        printer.writerow(
+            [os.path.abspath(create_relative_way(name_class, number)),
+             create_relative_way(name_class, number),
+             name_class]
+        )
 
-def relative_way(name: str, dir: str) -> List[str]:
-    {
-
-    }
 
 def create_csv(namecsv: str) -> None:
-    with open(namecsv + ".csv", "w", newline="") as f:
-        filewriter = csv.writer(f, delimiter=",", lineterminator="\r")
-        filewriter.writerow(["Absolute path", "Relative path", "Class name"])
+    num_files = len([f for f in os.listdir(namecsv + "/tulip")
+                     if os.path.isfile(os.path.join(namecsv + "/tulip", f))])
+    with open("dataset.csv", "w", newline='') as file:
+        printer = csv.writer(file, delimiter=";", )
+        printer.writerow(["The Absolute Way", "Relative Way", "Class"])
+    for i in range(0, num_files):
+        name_class = "tulip"
+        way = f"{namecsv}/{name_class}/{str(i).zfill(4)}.jpg"
+        if os.path.isfile(way):
+            write_in_file(name_class, i)
+        name_class = "rose"
+        way = f"{namecsv}/{name_class}/{str(i).zfill(4)}.jpg"
+        if os.path.isfile(way):
+            write_in_file(name_class, i)
 
 def create_relative_way(name_class: str, number: int) -> str:
     return f"dataset/download_data/{name_class}/{str(number).zfill(4)}.jpg"
-
-
-def create_another_relative_way(name_class: str, number: int) -> str:
-    return f"dataset/dataset_another/{name_class}_{str(number).zfill(4)}.jpg"
-
-
-def create_number_relative_way(number: int) -> str:
-    return f"dataset/dataset_number/{str(number).zfill(4)}.jpg"
