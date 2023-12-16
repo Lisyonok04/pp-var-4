@@ -14,7 +14,7 @@ def write_in_file(name_class: str, number: int) -> None:
 
     """
     with open("Annotasion.csv", "a", newline='', encoding='utf8') as file:
-        printer = csv.writer(file, delimiter=" ")
+        printer = csv.writer(file, delimiter=" ", lineterminator="\r")
         printer.writerow(
             [os.path.abspath(create_relative_way(name_class, number)),
              create_relative_way(name_class, number),
@@ -33,8 +33,8 @@ def create_csv(namecsv: str) -> None:
 
     """
     with open("Annotasion.csv", "w", newline='') as file:
-        printer = csv.writer(file, delimiter=" ", )
-        printer.writerow(["The Absolute Way", "Relative Way", "Class"])
+        printer = csv.writer(file, delimiter=" ", lineterminator="\r")
+        printer.writerow(["The Absolute Way", "Relative Way", "Class name"])
     for i in range(0, 2000):
         name_class = "tulip"
         way = f"{namecsv}/{name_class}/{str(i).zfill(4)}.jpg"
