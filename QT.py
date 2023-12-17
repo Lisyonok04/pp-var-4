@@ -26,15 +26,22 @@ class Interface(QWidget):
         self.initUI()
     def initUI(self) -> None:
         self.buttonSelect = QPushButton("Select dataset", self)
-        self.buttonSelect.setStyleSheet(
-            '''background: rgb(127, 255, 212);
-            border-style: outset; 
-            border-width: 5px;
-            font-size: 24px;
-            '''
-            )
-        
+        self.buttonSelect.setStyleSheet('''
+                                        background: rgb(127, 255, 212);
+                                        border-style: outset; 
+                                        border-width: 5px;
+                                        font-size: 24px;
+                                         ''')
         self.buttonSelect.setFixedSize(500, 60)
+
+        self.buttonCreate = QPushButton("Create annotasion for dataset", self)
+        self.buttonCreate.setStyleSheet('''
+                                        background: rgb(102, 205, 170);
+                                        border-style: outset; 
+                                        border-width: 5px;
+                                        font-size: 24px;
+                                        ''')
+        self.buttonCreate.setFixedSize(500, 60)
 
 def main() -> None:
     """
