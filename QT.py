@@ -33,10 +33,11 @@ class Interface(QWidget):
                                         font-size: 20px;
                                          ''')
         self.buttonSelect.setFixedSize(500, 60)
+        self.buttonSelect.clicked.connect(self.getdataset)
 
         self.buttonCreate = QPushButton("Create annotasion for dataset", self)
         self.buttonCreate.setStyleSheet('''
-                                        background: rgb(102, 205, 170);
+                                        background: rgb(64, 234, 208);
                                         border-style: outset; 
                                         border-width: 5px;
                                         font-size: 20px;
@@ -45,7 +46,7 @@ class Interface(QWidget):
 
         self.buttonNew = QPushButton("Create new dataset and annotasion for dataset", self)
         self.buttonNew.setStyleSheet('''
-                                        background: rgb(64, 224, 208);
+                                        background: rgb(30, 144, 255);
                                         border-style: outset; 
                                         border-width: 5px;
                                         font-size: 20px;
@@ -54,7 +55,7 @@ class Interface(QWidget):
 
         self.buttonRandom = QPushButton("Create new random dataset and annotasion for dataset", self)
         self.buttonRandom.setStyleSheet('''
-                                        background: rgb(72, 209, 204);
+                                        background: rgb(65, 105, 225);
                                         border-style: outset; 
                                         border-width: 5px;
                                         font-size: 19px;
@@ -63,23 +64,91 @@ class Interface(QWidget):
 
         self.buttonRose = QPushButton("Next rose", self)
         self.buttonRose.setStyleSheet('''
-                                        background: rgb(0, 206, 209);
+                                        background: rgb(218, 112, 214);
                                         border-style: outset; 
                                         border-width: 5px;
                                         font-size: 19px;
                                         ''')
         self.buttonRose.setFixedSize(500, 60)
+        self.buttonSelect.clicked.connect(self.next_rose)
 
         self.buttonTulip = QPushButton("Next tulip", self)
         self.buttonTulip.setStyleSheet('''
-                                        background: rgb(0, 255, 255);
+                                        background: rgb(147, 112, 219);
                                         border-style: outset; 
                                         border-width: 5px;
                                         font-size: 19px;
                                         ''')
         self.buttonTulip.setFixedSize(500, 60)
+        self.buttonSelect.clicked.connect(self.next_tulip)
 
+        self.label = QLabel(self)
 
+        grid = QGridLayout()
+        grid.setSpacing(2)
+
+        grid.addWidget(self.buttonSelect, 0, 0)
+        grid.addWidget(self.buttonCreate, 1, 0)
+        grid.addWidget(self.buttonNew, 2, 0)
+        grid.addWidget(self.buttonRandom, 3, 0)
+        grid.addWidget(self.buttonRose, 4, 0)
+        grid.addWidget(self.buttonTulip, 5, 0)
+        grid.addWidget(self.label, 0, 1, 4, 1, alignment=Qt.AlignCenter)
+
+        self.setLayout(grid)
+
+        self.setWindowTitle("Flower blossom")
+        self.setStyleSheet("background: rgb(220, 208, 255); font: 10pt Comic Sans MS")
+        self.setWindowIcon(QIcon("Windowrose.jpg"))
+
+    def messagebox(self, text: str) -> None:
+        dlg = QDialog(self)
+        dlg.setWindowTitle("Flower blossom")
+        text = QLabel(text, dlg)
+        btn = QPushButton("Ok", dlg)
+        vbox = QVBoxLayout(dlg)
+        vbox.addStretch(1)
+        vbox.addWidget(text)
+        vbox.addWidget(btn)
+        btn.clicked.connect(dlg.close)
+        dlg.exec()
+
+    def getdataset(self) -> None:
+        self.dirlist: str = QFileDialog.getExistingDirectory(self, "Select Folder")
+        if os.path.exists(os.path.join("pp-var-4", "dataset", "rose")) | os.path.exists(
+            os.path.join("dataset", "tulip")
+        ):
+            self.iter()
+        else:
+            self.messagebox("The folder is incorrectly selected.")
+
+    def iter(self) -> None:
+        self.rose: Iterator = Iterator("rose", self.dirlist)
+        self.tulip: Iterator = Iterator("tulip", self.dirlist)
+    
+    def next_rose(self) -> None:
+        rose_path: str = next(self.rose)
+        if rose_path != None:
+            image = QPixmap(rose_path)
+            image_rez = image.scaledToHeight(240)
+            self.label.setPixmap(image_rez)
+        else:
+            self.messagebox("The images of this class have ended.")
+            self.iter()
+            self.next_rose()
+
+    def next_tulip(self) -> None:
+        tulip_path: str = next(self.tulip)
+        if tulip_path != None:
+            image = QPixmap(tulip_path)
+            image_rez = image.scaledToHeight(240)
+            self.label.setPixmap(image_rez)
+        else:
+            self.messagebox("The images of this class have ended.")
+            self.iter()
+            self.next_tulip()
+
+    
 def main() -> None:
     """
     An application object is being created.
