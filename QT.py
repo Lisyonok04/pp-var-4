@@ -43,6 +43,7 @@ class Interface(QWidget):
                                         font-size: 20px;
                                         ''')
         self.buttonCreate.setFixedSize(500, 60)
+        self.buttonCreate.clicked.connect(self.create_csv)
 
         self.buttonNew = QPushButton("Create new dataset and annotasion for dataset", self)
         self.buttonNew.setStyleSheet('''
@@ -70,7 +71,7 @@ class Interface(QWidget):
                                         font-size: 19px;
                                         ''')
         self.buttonRose.setFixedSize(500, 60)
-        self.buttonSelect.clicked.connect(self.next_rose)
+        self.buttonRose.clicked.connect(self.next_rose)
 
         self.buttonTulip = QPushButton("Next tulip", self)
         self.buttonTulip.setStyleSheet('''
@@ -80,7 +81,7 @@ class Interface(QWidget):
                                         font-size: 19px;
                                         ''')
         self.buttonTulip.setFixedSize(500, 60)
-        self.buttonSelect.clicked.connect(self.next_tulip)
+        self.buttonTulip.clicked.connect(self.next_tulip)
 
         self.label = QLabel(self)
 
@@ -125,6 +126,28 @@ class Interface(QWidget):
     def iter(self) -> None:
         self.rose: Iterator = Iterator("rose", self.dirlist)
         self.tulip: Iterator = Iterator("tulip", self.dirlist)
+    
+    def select(self) -> List[str]:
+        """
+        User's choice of folders.
+        """
+        paths: List[str] = []
+        dirlist: str = QFileDialog.getExistingDirectory(self, "Select Folder")
+        save_dir: str = QFileDialog.getExistingDirectory(self, "Select Folder For Save")
+        paths.append(dirlist)
+        paths.append(save_dir)
+        return paths
+
+    def create_csv(self) -> None:
+        paths: List[str] = self.select()
+        if os.path.exists(os.path.join(paths[0], "rose")) & os.path.exists(
+            os.path.join(paths[0], "tulip")
+        ):
+            task1.create_csv(paths[0])
+            task1.create_csv(paths[1])
+            self.messagebox("The annotation have been created.")
+        else:
+            self.messagebox("The folder is incorrectly selected.")
     
     def next_rose(self) -> None:
         rose_path: str = next(self.rose)
