@@ -118,8 +118,9 @@ class Interface(QWidget):
 
     def getdataset(self) -> None:
         self.dirlist: str = QFileDialog.getExistingDirectory(self, "Select Folder")
-        if os.path.exists(os.path.join("pp-var-4", "dataset", "rose")) | os.path.exists(
-            os.path.join("dataset", "tulip")
+        paths: str = self.select()
+        if os.path.exists(os.path.join(paths, "rose")) | os.path.exists(
+            os.path.join(paths, "tulip")
         ):
             self.iter()
         else:
@@ -129,46 +130,41 @@ class Interface(QWidget):
         self.rose: Iterator = Iterator("rose", self.dirlist)
         self.tulip: Iterator = Iterator("tulip", self.dirlist)
     
-    def select(self) -> List[str]:
+    def select(self) -> str:
         """
-        User's choice of folders.
+        User's choice of folder.
         """
-        paths: List[str] = []
         dirlist: str = QFileDialog.getExistingDirectory(self, "Select Folder")
-        save_dir: str = QFileDialog.getExistingDirectory(self, "Select Folder For Save")
-        paths.append(dirlist)
-        paths.append(save_dir)
-        return paths
+        return dirlist
 
     def create_csv(self) -> None:
-        paths: List[str] = self.select()
-        if os.path.exists(os.path.join(paths[0], "rose")) & os.path.exists(
-            os.path.join(paths[0], "tulip")
+        paths: str = self.select()
+        if os.path.exists(os.path.join(paths, "rose")) & os.path.exists(
+            os.path.join(paths, "tulip")
         ):
-            task1.create_csv(paths[0])
-            task1.create_csv(paths[1])
+            task1.create_csv(paths)
             self.messagebox("The annotation have been created.")
         else:
             self.messagebox("The folder is incorrectly selected.")
     
     def copy(self) -> None:
-        paths: List[str] = self.select()
-        if os.path.exists(os.path.join(paths[0], "rose")) & os.path.exists(
-            os.path.join(paths[0], "tulip")
+        paths: str = self.select()
+        if os.path.exists(os.path.join(paths, "rose")) & os.path.exists(
+            os.path.join(paths, "tulip")
         ):
-            task2.copy_in_file(paths[0], "dataset2", "tulip")
-            task2.copy_in_file(paths[1], "dataset2", "rose")
+            task2.copy_in_file(paths, "dataset2", "tulip")
+            task2.copy_in_file(paths, "dataset2", "rose")
             self.messagebox("The dataset and annotation have been created.")
         else:
             self.messagebox("The folder is incorrectly selected.")
 
     def random(self) -> None:
-        paths: List[str] = self.select()
-        if os.path.exists(os.path.join(paths[0], "rose")) & os.path.exists(
-            os.path.join(paths[0], "tulip")
+        paths: str = self.select()
+        if os.path.exists(os.path.join(paths, "rose")) & os.path.exists(
+            os.path.join(paths, "tulip")
         ):
-            task3.copy_images(paths[0], "dataset3", "tulip")
-            task3.copy_images(paths[1], "dataset3", "rose")
+            task3.copy_images(paths, "dataset3", "tulip")
+            task3.copy_images(paths, "dataset3", "rose")
             self.messagebox("The dataset and annotation have been created.")
         else:
             self.messagebox("The folder is incorrectly selected.")
