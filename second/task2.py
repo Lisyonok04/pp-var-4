@@ -4,6 +4,14 @@ import os
 from typing import List
 
 def copy_in_file(old: str, new: str, name: str) -> None:
+    
+    """
+    This function accepts name of the old dir, new one and the name of the class.
+
+    The function thus copies files from the old directory to the new one, 
+    adding the class name to each file, and creates entries in a CSV file 
+    with absolute and relative paths, as well as the class name for each copied file.
+    """
     abs_path: str = os.path.abspath(new)
     rel_path: str = os.path.relpath(new)
     path: str = os.path.join(os.path.abspath(old), name)
@@ -11,7 +19,7 @@ def copy_in_file(old: str, new: str, name: str) -> None:
     for img in list_images:
         shutil.copy(os.path.join(path, img), os.path.join(new, f"{name}_{img}"))
         with open("Annotasion2.csv", "a") as f:
-            printer = csv.writer(f, delimiter=" ")
+            printer = csv.writer(f, delimiter=",")
             #printer.writerow(["The Absolute Way", "Relative Way", "Class"])
             printer.writerow(
                 [
@@ -27,7 +35,7 @@ def creating_csvfile(namecsv: str) -> None:
     creates a .csv file with the passed name and writes the column headers.
     """
     with open("Annotasion2.csv", "w", newline="") as f:
-        filewriter = csv.writer(f, delimiter=" ", lineterminator="\r")
+        filewriter = csv.writer(f, delimiter=",", lineterminator="\r")
         filewriter.writerow(["Absolute path", "Relative path", "Class name"])
 
 
