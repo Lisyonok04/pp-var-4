@@ -5,21 +5,25 @@ import random
 from typing import List
 
 
-def copy_images(old_dir: str, new_dir: str, name: str) -> None:
+def copy_images(old: str, new: str, name: str) -> None:
     """
-    The function copies one image from the old directory to the new one,
-    changing the name, and writes its absolute, relative paths and class name to the .csv file.
+    This function accepts name of the old dir, new one and the name of the class.
+
+    The function thus copies files from the old directory to the new one, 
+    adding the class name to each file, and creates entries in a CSV file 
+    with absolute and relative paths, as well as the class name for each copied file.
+    It also changes names of images for random number.
     """
-    abs_path: str = os.path.abspath(new_dir)
-    rel_path: str = os.path.relpath(new_dir)
+    abs_path: str = os.path.abspath(new)
+    rel_path: str = os.path.relpath(new)
     random_number: name = random.sample((range(0, 10000)), 2000)
     count: int = 0
-    path: str = os.path.join(os.path.abspath(old_dir), name)
+    path: str = os.path.join(os.path.abspath(old), name)
     list_images: name = os.listdir(path)
     for img in list_images:
         new_name: str = f"{random_number[count]}".zfill(5)
         shutil.copy(
-            os.path.join(path, img), os.path.join(new_dir, f"{new_name}.jpg")
+            os.path.join(path, img), os.path.join(new, f"{new_name}.jpg")
         )
         with open("Annotasion3.csv", "a") as f:
             filewriter = csv.writer(f, delimiter=" ", lineterminator="\r")
