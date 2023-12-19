@@ -22,9 +22,15 @@ from task5 import Iterator
 
 class Interface(QWidget):
     def __init__(self) -> None:
+        """
+        Creating window
+        """
         super().__init__()
         self.initUI()
     def initUI(self) -> None:
+        """
+        The description of buttons (their placement and etc)
+        """
         self.buttonSelect = QPushButton("Select dataset", self)
         self.buttonSelect.setStyleSheet('''
                                         background: rgb(127, 255, 212);
@@ -105,6 +111,9 @@ class Interface(QWidget):
         self.setWindowIcon(QIcon("Windowrose.jpg"))
 
     def messagebox(self, text: str) -> None:
+        """
+        The window with messages (the text is taken as an argument)
+        """
         dlg = QDialog(self)
         dlg.setWindowTitle("Flower blossom")
         text = QLabel(text, dlg)
@@ -117,6 +126,9 @@ class Interface(QWidget):
         dlg.exec()
 
     def getdataset(self) -> None:
+        """
+        Asking for the dataset. If it's not existing, there is a messegebox about wrong parameters
+        """
         self.dirlist: str = QFileDialog.getExistingDirectory(self, "Select Folder")
         paths: str = self.select()
         if os.path.exists(os.path.join(paths, "rose")) | os.path.exists(
@@ -127,17 +139,23 @@ class Interface(QWidget):
             self.messagebox("The folder is incorrectly selected.")
 
     def iter(self) -> None:
+        """
+        Creating two iterators: for rose and tulip
+        """
         self.rose: Iterator = Iterator("rose", self.dirlist)
         self.tulip: Iterator = Iterator("tulip", self.dirlist)
     
     def select(self) -> str:
         """
-        User's choice of folder.
+        User's choice of folder
         """
         dirlist: str = QFileDialog.getExistingDirectory(self, "Select Folder")
         return dirlist
 
     def create_csv(self) -> None:
+        """
+        Creating an annotasion for the dataset
+        """
         paths: str = self.select()
         if os.path.exists(os.path.join(paths, "rose")) & os.path.exists(
             os.path.join(paths, "tulip")
@@ -148,6 +166,9 @@ class Interface(QWidget):
             self.messagebox("The folder is incorrectly selected.")
     
     def copy(self) -> None:
+        """
+        Makes a copy of dataset with new images' names
+        """
         paths: str = self.select()
         if os.path.exists(os.path.join(paths, "rose")) & os.path.exists(
             os.path.join(paths, "tulip")
@@ -159,6 +180,9 @@ class Interface(QWidget):
             self.messagebox("The folder is incorrectly selected.")
 
     def random(self) -> None:
+        """
+        Makes a copy of dataset with random images' names
+        """
         paths: str = self.select()
         if os.path.exists(os.path.join(paths, "rose")) & os.path.exists(
             os.path.join(paths, "tulip")
@@ -170,6 +194,9 @@ class Interface(QWidget):
             self.messagebox("The folder is incorrectly selected.")
 
     def next_rose(self) -> None:
+        """
+        Displays the following image of a rose
+        """
         rose_path: str = next(self.rose)
         if rose_path != None:
             image = QPixmap(rose_path)
@@ -181,6 +208,9 @@ class Interface(QWidget):
             self.next_rose()
 
     def next_tulip(self) -> None:
+        """
+        Displays the following image of a tulip
+        """
         tulip_path: str = next(self.tulip)
         if tulip_path != None:
             image = QPixmap(tulip_path)
@@ -194,7 +224,7 @@ class Interface(QWidget):
     
 def main() -> None:
     """
-    An application object is being created.
+    An application object is being created
     """
     app = QApplication(sys.argv)
     ex = Interface()
