@@ -47,9 +47,7 @@ def creating_csvfile(namecsv: str) -> None:
         filewriter.writerow(["Absolute path", "Relative path", "Class name"])
 
 
-
 if __name__ == "__main__":
     creating_csvfile("Annotasion3")
     copy_images("dataset", "dataset3", "tulip")
     copy_images("dataset", "dataset3", "rose")
-    
