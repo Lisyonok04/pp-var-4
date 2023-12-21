@@ -1,6 +1,7 @@
 import os
 from typing import List
 
+
 class Iterator:
     def __init__(self, class_name: str, dir: str):
         """
@@ -14,6 +15,7 @@ class Iterator:
         self.dir: str = dir
         self.data: List[str] = os.listdir(os.path.join(dir, class_name))
         self.limit: int = len(self.data)
+
     def __next__(self):
         """
         It returns the next image of the class. When the counter reaches the limit, 
@@ -28,7 +30,9 @@ class Iterator:
         else:
             raise StopIteration
 
+
 if __name__ == "__main__":
+
     class_name: Iterator = Iterator("rose", "dataset")
 
     for _ in range(5):
