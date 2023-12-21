@@ -14,11 +14,12 @@ def make_folder(name: str) -> None:
     if not os.path.isdir(name):
         os.mkdir(name)
 
+
 def pic_links(request: str, num: int) -> None:
     driver = webdriver.Chrome(service=ChromeService(
         ChromeDriverManager().install()))
     url = f"https://yandex.ru/images/search?text={request}"
-    driver.get(url = url)
+    driver.get(url=url)
     driver.maximize_window()
     time.sleep(10)
     driver.find_element(
@@ -35,10 +36,8 @@ def pic_links(request: str, num: int) -> None:
             except:
                 continue
 
-
     driver.close()
     driver.quit()
-
 
 
 def download(request: str) -> None:
@@ -60,6 +59,7 @@ def download(request: str) -> None:
             except:
                 continue
 
+
 def main() -> None:
 
     if os.path.isdir("dataset"):
@@ -71,3 +71,7 @@ def main() -> None:
     request = "rose"
     pic_links(request, 1000)
     download(request)
+
+
+if __name__ == "__main__":
+    main()
