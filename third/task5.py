@@ -1,6 +1,7 @@
 import os
 from typing import List
 
+
 class Iterator:
     def __init__(self, class_name: str, dir: str):
         self.class_name: str = class_name
@@ -8,6 +9,7 @@ class Iterator:
         self.dir: str = dir
         self.data: List[str] = os.listdir(os.path.join(dir, class_name))
         self.limit: int = len(self.data)
+
     def __next__(self):
         if self.counter < self.limit:
             path: str = os.path.join(
@@ -17,6 +19,7 @@ class Iterator:
             return path
         else:
             raise StopIteration
+
 
 if __name__ == "__main__":
     class_name: Iterator = Iterator("rose", "dataset")
