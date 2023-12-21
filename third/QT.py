@@ -20,6 +20,7 @@ import task2
 import task3
 from task5 import Iterator
 
+
 class Interface(QWidget):
     def __init__(self) -> None:
         """
@@ -27,6 +28,7 @@ class Interface(QWidget):
         """
         super().__init__()
         self.initUI()
+
     def initUI(self) -> None:
         """
         The description of buttons (their placement and etc)
@@ -51,7 +53,8 @@ class Interface(QWidget):
         self.buttonCreate.setFixedSize(500, 60)
         self.buttonCreate.clicked.connect(self.create_csv)
 
-        self.buttonNew = QPushButton("Create new dataset and annotasion for dataset", self)
+        self.buttonNew = QPushButton(
+            "Create new dataset and annotasion for dataset", self)
         self.buttonNew.setStyleSheet('''
                                         background: rgb(30, 144, 255);
                                         border-style: outset; 
@@ -61,7 +64,8 @@ class Interface(QWidget):
         self.buttonNew.setFixedSize(500, 60)
         self.buttonNew.clicked.connect(self.copy)
 
-        self.buttonRandom = QPushButton("Create new random dataset and annotasion for dataset", self)
+        self.buttonRandom = QPushButton(
+            "Create new random dataset and annotasion for dataset", self)
         self.buttonRandom.setStyleSheet('''
                                         background: rgb(65, 105, 225);
                                         border-style: outset; 
@@ -102,12 +106,13 @@ class Interface(QWidget):
         grid.addWidget(self.buttonRandom, 3, 0)
         grid.addWidget(self.buttonRose, 4, 0)
         grid.addWidget(self.buttonTulip, 5, 0)
-        grid.addWidget(self.label, 0, 1, 4, 1, alignment=Qt.AlignCenter)
+        grid.addWidget(self.label, 1, 1, 4, 1)
 
         self.setLayout(grid)
 
         self.setWindowTitle("Flower blossom")
-        self.setStyleSheet("background: rgb(220, 208, 255); font: 10pt Comic Sans MS")
+        self.setStyleSheet(
+            "background: rgb(220, 208, 255); font: 10pt Comic Sans MS")
         self.setWindowIcon(QIcon("Windowrose.jpg"))
 
     def messagebox(self, text: str) -> None:
@@ -129,14 +134,16 @@ class Interface(QWidget):
         """
         Asking for the dataset. If it's not existing, there is a messegebox about wrong parameters
         """
-        self.dirlist: str = QFileDialog.getExistingDirectory(self, "Select Folder")
+        self.dirlist: str = QFileDialog.getExistingDirectory(
+            self, "Select Folder")
         paths: str = self.select()
-        if os.path.exists(os.path.join(paths, "rose")) | os.path.exists(
+        if os.path.exists(os.path.join(paths, "rose")) & os.path.exists(
             os.path.join(paths, "tulip")
         ):
             self.iter()
+            self.messagebox("Successfully got")
         else:
-            self.messagebox("The folder is incorrectly selected.")
+            self.messagebox("Incorrect path")
 
     def iter(self) -> None:
         """
@@ -144,7 +151,7 @@ class Interface(QWidget):
         """
         self.rose: Iterator = Iterator("rose", self.dirlist)
         self.tulip: Iterator = Iterator("tulip", self.dirlist)
-    
+
     def select(self) -> str:
         """
         User's choice of folder
@@ -161,10 +168,10 @@ class Interface(QWidget):
             os.path.join(paths, "tulip")
         ):
             task1.create_csv(paths)
-            self.messagebox("The annotation have been created.")
+            self.messagebox("Successfully created")
         else:
-            self.messagebox("The folder is incorrectly selected.")
-    
+            self.messagebox("Incorrect path")
+
     def copy(self) -> None:
         """
         Makes a copy of dataset with new images' names
@@ -175,9 +182,9 @@ class Interface(QWidget):
         ):
             task2.copy_in_file(paths, "dataset2", "tulip")
             task2.copy_in_file(paths, "dataset2", "rose")
-            self.messagebox("The dataset and annotation have been created.")
+            self.messagebox("Successfully created")
         else:
-            self.messagebox("The folder is incorrectly selected.")
+            self.messagebox("Incorrect path")
 
     def random(self) -> None:
         """
@@ -189,7 +196,7 @@ class Interface(QWidget):
         ):
             task3.copy_images(paths, "dataset3", "tulip")
             task3.copy_images(paths, "dataset3", "rose")
-            self.messagebox("The dataset and annotation have been created.")
+            self.messagebox("Successfully created")
         else:
             self.messagebox("The folder is incorrectly selected.")
 
@@ -221,7 +228,7 @@ class Interface(QWidget):
             self.iter()
             self.next_tulip()
 
-    
+
 def main() -> None:
     """
     An application object is being created
