@@ -2,8 +2,8 @@ import csv
 import os
 from typing import List
 
-def write_in_file(name_class: str, number: int) -> None:
 
+def write_in_file(name_class: str, number: int) -> None:
     """
     This function accepts the name of the class and the photo number.
 
@@ -45,13 +45,14 @@ def create_csv(namecsv: str) -> None:
         if os.path.isfile(way):
             write_in_file(name_class, i)
 
+
 def create_relative_way(name_class: str, number: int) -> str:
     """
     This function accepts the name of the class and the number of the picture.
-    
     It creates a relative path to the file using the class name and file number.
     """
-    return f"dataset/{name_class}/{str(number).zfill(4)}.jpg"
+    return os.path.join('dataset', f'{str(number).zfill(4)}.jpg')
+
 
 if __name__ == "__main__":
     create_csv("dataset")
