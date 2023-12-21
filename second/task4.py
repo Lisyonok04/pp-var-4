@@ -17,8 +17,6 @@ def get_next(name_class: str) -> str:
             yield None
 
 
-
-
 if __name__ == "__main__":
-   print(*get_next("rose"))
-   print(*get_next("tulip"))
+    print(*get_next("rose"))
+    print(*get_next("tulip"))
